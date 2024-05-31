@@ -1,134 +1,84 @@
 const userForm = document.getElementById('userForm');
 
 // CRIAR USUÁRIO
-userForm.addEventListener('submit', (e) => {
-  e.preventDefault();
+  async function CadastrarUsuario() {
+    const nome = document.getElementById('nome').value;
+    const sobrenome = document.getElementById('sobrenome').value;
+    const idade = document.getElementById('idade').value;
+    const profissao = document.getElementById('profissao').value;
 
-  const nome = document.getElementById('nome').value;
-  const sobrenome = document.getElementById('sobrenome').value;
-  const idade = document.getElementById('idade').value;
-  const profissao = document.getElementById('profissao').value;
+    const respostaID = await fetch('http://localhost:3000/users/')
+    const data = await respostaID.json()
+    const arrayID = data.map(users => users.id)
 
-  const userData = {
-    nome: nome,
-    sobrenome: sobrenome,
-    idade: idade,
-    profissao: profissao
-  };
+    var novoID = 1
+    if (arrayID.length > 0) {
+      novoID = Math.max(...arrayID) + 1
+    }
 
-  fetch('http://localhost:3000/users', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(userData)
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Success:', data);
-    alert('Usuário cadastrado com sucesso!');
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    alert('Erro ao cadastrar usuário');
-  });
-});
+    const outroID = novoID.toString()
 
+    const userData = {
+      id: outroID,
+      nome: nome,
+      sobrenome: sobrenome,
+      idade: idade,
+      profissao: profissao
+    };
+
+    fetch('http://localhost:3000/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
+    })
+    .then(response => response.json())
+    .then(alert('Usuário cadastrado com sucesso!'))
+};
 
 // PROCURAR
 
-const searchForm = document.getElementById('searchForm');
-
-searchForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-
+async function BuscarUsuario() {
+  event.preventDefault()
   const userId = document.getElementById('userId').value;
+  const response = await fetch(`http://localhost:3000/users/${userId}`);
+  const data = await response.json();
 
-  fetch(`http://localhost:3000/users/${userId}`)
-    .then(response => {  
-      if (!response.ok) {
-        throw new Error('Usuário não encontrado');
-      }
-      return response.json();
-    })
-    .then(data => {
-      document.getElementById('updateNome').value = data.nome;
-      document.getElementById('updateSobrenome').value = data.sobrenome;
-      document.getElementById('updateIdade').value = data.idade;
-      document.getElementById('updateProfissao').value = data.profissao;
-      updateForm.style.display = 'block';
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('Erro ao buscar usuário');
-    });
-});
+  document.getElementById('updateNome').value = data.nome;
+  document.getElementById('updateSobrenome').value = data.sobrenome;
+  document.getElementById('updateIdade').value = data.idade;
+  document.getElementById('updateProfissao').value = data.profissao;
+
+  updateForm.classList.remove('disappear');
+  
+}
+
 
 // UPDATE FORM
 
-const updateForm = document.getElementById('updateForm');
+  async function AlterarUsuario() {
+    const userId = document.getElementById('userId').value;
+    const nome = document.getElementById('updateNome').value;
+    const sobrenome = document.getElementById('updateSobrenome').value;
+    const idade = document.getElementById('updateIdade').value;
+    const profissao = document.getElementById('updateProfissao').value;
 
-updateForm.addEventListener('submit', (e) => {
-  e.preventDefault();
+    const userData = {
+      nome: nome,
+      sobrenome: sobrenome,
+      idade: idade,
+      profissao: profissao
+    };
 
-  const userId = document.getElementById('userId').value;
-  const nome = document.getElementById('updateNome').value;
-  const sobrenome = document.getElementById('updateSobrenome').value;
-  const idade = document.getElementById('updateIdade').value;
-  const profissao = document.getElementById('updateProfissao').value;
-
-  const userData = {
-    nome: nome,
-    sobrenome: sobrenome,
-    idade: idade,
-    profissao: profissao
-  };
-
-  fetch(`http://localhost:3000/users/${userId}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(userData)
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Erro ao alterar usuário');
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log('Success:', data);
-    alert('Usuário alterado com sucesso!');
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    alert('Erro ao alterar usuário');
-  });
-});
-
-// TABELA
-
-function fetchUsers() {
-  fetch('http://localhost:3000/users')
-    .then(response => response.json())
-    .then(data => {
-      const usersTableBody = document.querySelector('#usersTable tbody');
-      usersTableBody.innerHTML = '';
-      data.forEach(user => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${user.nome}</td>
-          <td>${user.sobrenome}</td>
-          <td>${user.idade}</td>
-          <td>${user.profissao}</td>
-        `;
-        usersTableBody.appendChild(row);
-      });
+    await fetch(`http://localhost:3000/users/${userId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
     })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-}
+    .then(response => response.json())
+    .then(alert('Usuário alterado com sucesso!'))
+};
 
-fetchUsers();
