@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="./server.js" defer></script>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li class="cadastrar">CADASTRAR</li>
+        <li class="alterar">ALTERAR</li>
+        <li class="consultar">CONSULTAR</li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+  <section id="cadastrar" class="appear">
+    <h1>CADASTRAR</h1>
+    <form id="userForm">
+      <label for="nome">Nome</label>
+      <input type="text" id="nome" placeholder="digite seu nome" required>
+      <label for="sobrenome">Sobrenome</label>
+      <input type="text" id="sobrenome" placeholder="digite seu sobrenome" required>
+      <label for="idade">Idade</label>
+      <input type="number" id="idade" placeholder="digite sua idade" required max="100" min="1">
+      <label for="profissao">Profissão</label>
+      <input type="text" id="profissao" placeholder="digite sua profissão" required>
+      <div>
+        <button type="submit">Cadastrar</button>
+      </div>
+    </form>
+  </section>
+  <section id="alterar" class="disappear">
+    <h1>ALTERAR</h1>
+    <form id="searchForm">
+      <h3>Buscar Usuário</h3>
+      <label for="userId">ID do Usuário:</label>
+      <input type="text" id="userId" name="userId" required>
+      <button type="submit">Buscar</button>
+    </form>
+    
+    <form id="updateForm" style="display: none;">
+      <h3>Alterar Dados do Usuário</h3>
+      <label for="nome">Nome:</label>
+      <input type="text" id="updateNome" name="nome" required>
+      <label for="sobrenome">Sobrenome:</label>
+      <input type="text" id="updateSobrenome" name="sobrenome" required>
+      <label for="idade">Idade:</label>
+      <input type="text" id="updateIdade" name="idade" required>
+      <label for="profissao">Profissão:</label>
+      <input type="text" id="updateProfissao" name="profissao" required>
+      <button type="submit">Alterar</button>
+    </form>
+  </section>
+  <section id="consultar" class="disappear">
+    <h1>USUÁRIOS CADASTRADOS</h1>
+    <table id="usersTable">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Sobrenome</th>
+          <th>Idade</th>
+          <th>Profissão</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </section>
+  </main>
+  <script src="./script.js"></script>
+</body>
+</html>
