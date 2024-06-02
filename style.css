@@ -6,6 +6,9 @@
 
 :root {
   font-size: 62.5%;
+  --yellow: #ecca30;
+  --purple: #684286;
+  --gray: #e7e7e7
 }
 
 .disappear {
@@ -16,20 +19,18 @@
 }
 
 body {
-  background-color: #684286;
+  background-color: var(--purple);
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.6rem;
-  
 }
 
 header {
   height: 8rem;
-  background-color: aliceblue;
+  background-color: var(--gray);
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 
 ul {
   display: flex;
@@ -39,7 +40,7 @@ ul {
 li {
   list-style: none;
   padding: 1.6rem 2rem;
-  background-color: #ecca30;
+  background-color: var(--yellow);
   font-weight: bold;
   border-radius: 12px;
   cursor: pointer;
@@ -53,7 +54,6 @@ li:hover {
 section {
   width: 100%;
   height: calc(100vh - 8rem);
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -63,7 +63,6 @@ section {
 h1 {
   font-size: 5rem;
   color: white;
-  
 }
 
 form {
@@ -72,9 +71,7 @@ form {
   padding: 5rem 3rem;
   display: flex;
   flex-direction: column;
-  
-  
-  background-color: #ecca30;
+  background-color: var(--yellow);
   gap: 1rem;
   border-radius: 1.2rem;
 }
@@ -102,9 +99,76 @@ button {
   padding: 1.2rem 3rem;
   border-radius: 1rem;
   border: none;
-  background-color: #684286;
+  background-color: var(--purple);
   color: white;
   text-transform: uppercase;
   cursor: pointer;
   font-weight: bold;
 }
+
+#updateForm {
+  border-top-left-radius: 0%;
+  border-top-right-radius: 0%;
+  padding-top: 0;
+}
+#searchForm {
+  border-bottom-left-radius: 0%;
+  border-bottom-right-radius: 0%;
+}
+
+#usersTable {
+  font-family: Arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 100rem;
+  border: 1px solid var(--gray);
+}
+
+#usersTable th {
+  background-color: var(--yellow);
+  color: black;
+  font-weight: bold;
+  padding: 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid var(--gray);
+}
+
+#usersTable td {
+  padding: 8px;
+  border-bottom: 1px solid var(--gray);
+}
+
+#usersTable thead th:nth-child(1) {
+  width: 1rem;
+}
+
+#usersTable tbody tr:nth-child(odd) {
+  background-color: var(--gray);
+}
+
+#usersTable tbody tr:nth-child(even) {
+  background-color: white;
+}
+
+#usersTable td:last-child {
+  text-align: center;
+}
+
+#usersTable td:first-child {
+  font-weight: bold;
+}
+
+#usersTable button {
+  padding: 0;
+  background-color: transparent;
+  color: black;
+}
+
+#usersTable button:hover {
+  color: red;
+}
+
+i {
+  font-size: 2.4rem;
+}
+

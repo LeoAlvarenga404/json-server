@@ -16,10 +16,10 @@ const userForm = document.getElementById('userForm');
       novoID = Math.max(...arrayID) + 1
     }
 
-    const outroID = novoID.toString()
+    const id = novoID.toString()
 
     const userData = {
-      id: outroID,
+      id: id,
       nome: nome,
       sobrenome: sobrenome,
       idade: idade,
@@ -49,11 +49,10 @@ async function BuscarUsuario() {
   document.getElementById('updateSobrenome').value = data.sobrenome;
   document.getElementById('updateIdade').value = data.idade;
   document.getElementById('updateProfissao').value = data.profissao;
-
   updateForm.classList.remove('disappear');
-  
-}
 
+  // pega o valor dos inputs do form de alterar e coloca o valor
+}
 
 // UPDATE FORM
 
@@ -82,3 +81,44 @@ async function BuscarUsuario() {
     .then(alert('Usuário alterado com sucesso!'))
 };
 
+// GET
+
+async function MostrarUsuario() {
+  const tbody = document.querySelector('tbody');
+  tbody.innerHTML = '';
+  const response = await fetch('http://localhost:3000/users/', {
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+  const data = await response.json();
+
+  data.forEach(user => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${user.id}</td>
+      <td>${user.nome}</td>
+      <td>${user.sobrenome}</td>
+      <td>${user.idade}</td>
+      <td>${user.profissao}</td>
+      <td><button onclick='DeletarUsuario(${user.id})'><i class="ph ph-trash"></i></button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+MostrarUsuario()
+
+async function DeletarUsuario(id) {
+  await fetch(`http://localhost:3000/users/${id}`, {
+    method: "DELETE",
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(alert('Usuário deletado')).catch(error => {
+    console.error('erro:', error)
+  })
+  ;
+}
